@@ -24,6 +24,13 @@ public class Application {
                     41
             );
 
+            StudentEntity maria2 = new StudentEntity(
+                    "Maria",
+                    "Jones",
+                    "maria2.jones@willard.io",
+                    25
+            );
+
             StudentEntity nick = new StudentEntity(
                     "Nick",
                     "Willard",
@@ -32,32 +39,19 @@ public class Application {
             );
 
             System.out.println("Adding maria and nick to the Database");
-            studentRepository.saveAll(List.of(maria, nick));
-
-            System.out.print("Number of Students: ");
-            System.out.println(studentRepository.count());
+            studentRepository.saveAll(List.of(maria, nick, maria2));
 
             studentRepository
-                    .findById(2L)
+                    .findStudentByEmail("nick.willard@willard.io")
                     .ifPresentOrElse(
                             System.out::println,
-                            () -> System.out.println("Student with ID 2 not found"));
+                            () -> System.out.println("Student with email nick.willard@willard.io not found"));
 
             studentRepository
-                    .findById(3L)
-                    .ifPresentOrElse(
-                            System.out::println,
-                            () -> System.out.println("Student with ID 3 not found"));
-
-            System.out.println("Select all Students");
-            List<StudentEntity> students = studentRepository.findAll();
-            students.forEach(System.out::println);
-
-            System.out.println("Delete maria");
-            studentRepository.deleteById(1L);
-
-            System.out.print("Number of Students: ");
-            System.out.println(studentRepository.count());
+                    .findStudentsByFirstNameEqualsAndAgeIsGreaterThan(
+                            "Maria",
+                            18
+                    ).forEach(System.out::println);
         };
     }
 }
