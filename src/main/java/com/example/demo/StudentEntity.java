@@ -3,6 +3,8 @@ package com.example.demo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -18,7 +20,6 @@ import javax.persistence.UniqueConstraint;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "Student")
 @Table(
@@ -27,7 +28,7 @@ import javax.persistence.UniqueConstraint;
                 @UniqueConstraint(name = "student_email_unique", columnNames = "email")
         }
 )
-public class Student {
+public class StudentEntity {
     @Id
     @SequenceGenerator(
             name = "student_sequence",
@@ -70,4 +71,11 @@ public class Student {
             nullable = false
     )
     private Integer age;
+
+    public StudentEntity(String firstName, String lastName, String email, Integer age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.age = age;
+    }
 }
