@@ -76,6 +76,9 @@ public class Application {
                             "Maria",
                             18
                     ).forEach(System.out::println);
+
+            System.out.println("Deleting Maria #2");
+            System.out.println(studentRepository.deleteStudentById(3L));
         };
     }
 }
