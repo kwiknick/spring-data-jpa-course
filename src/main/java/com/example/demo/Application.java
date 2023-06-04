@@ -42,10 +42,22 @@ public class Application {
             studentRepository.saveAll(List.of(maria, nick, maria2));
 
             studentRepository
+                    .findStudentByEmailCustomQuery("nick.willard@willard.io")
+                    .ifPresentOrElse(
+                            System.out::println,
+                            () -> System.out.println("Student with email nick.willard@willard.io not found"));
+
+            studentRepository
                     .findStudentByEmail("nick.willard@willard.io")
                     .ifPresentOrElse(
                             System.out::println,
                             () -> System.out.println("Student with email nick.willard@willard.io not found"));
+
+            studentRepository
+                    .findStudentsByFirstNameEqualsAndAgeIsGreaterThanCustomQuery(
+                            "Maria",
+                            18
+                    ).forEach(System.out::println);
 
             studentRepository
                     .findStudentsByFirstNameEqualsAndAgeIsGreaterThan(
