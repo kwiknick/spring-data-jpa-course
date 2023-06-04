@@ -7,14 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplicationHelper {
 
-    private static StudentRepository studentRepository;
-
-    @Autowired
-    public ApplicationHelper(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
-
-    public static Integer AddTestStudentData(Integer rowsToCreate) {
+    public static Integer AddTestStudentData(Integer rowsToCreate, StudentRepository studentRepository) {
         Integer savedStudents = 0;
         Faker faker = new Faker();
         for (int i = 1; i <= 20; i++) {
