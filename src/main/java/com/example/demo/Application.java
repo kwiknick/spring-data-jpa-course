@@ -64,6 +64,18 @@ public class Application {
                             "Maria",
                             18
                     ).forEach(System.out::println);
+
+            studentRepository
+                    .findStudentsByFirstNameEqualsAndAgeIsGreaterOrEqualNativeQuery(
+                            "Maria",
+                            18
+                    ).forEach(System.out::println);
+
+            studentRepository
+                    .findStudentsByFirstNameEqualsAndAgeIsGreaterOrEqualNamedParameters(
+                            "Maria",
+                            18
+                    ).forEach(System.out::println);
         };
     }
 }
