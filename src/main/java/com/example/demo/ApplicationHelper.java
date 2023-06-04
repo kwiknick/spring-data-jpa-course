@@ -1,0 +1,39 @@
+package com.example.demo;
+
+import com.github.javafaker.Faker;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ApplicationHelper {
+
+    private static StudentRepository studentRepository;
+
+    @Autowired
+    public ApplicationHelper(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
+
+    public static Integer AddTestStudentData(Integer rowsToCreate) {
+        Integer savedStudents = 0;
+        Faker faker = new Faker();
+        for (int i = 1; i <= 20; i++) {
+            String firstName = faker.name().firstName();
+            String lastName = faker.name().lastName();
+            String email = String.format("%s.%s@willard.io", firstName, lastName);
+            StudentEntity student = new StudentEntity(
+                    firstName,
+                    lastName,
+                    email,
+                    faker.number().numberBetween(17, 55));
+
+            try {
+                studentRepository.save(student);
+                savedStudents = savedStudents + 1;
+            } catch (Exception ex) {
+                System.out.println("An Exception was thrown while saving a test Student: " + ex.getMessage());
+            }
+        }
+        return savedStudents;
+    }
+}
