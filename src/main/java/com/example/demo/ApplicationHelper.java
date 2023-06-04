@@ -1,13 +1,13 @@
 package com.example.demo;
 
 import com.github.javafaker.Faker;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ApplicationHelper {
 
-    public static Integer AddTestStudentData(Integer rowsToCreate, StudentRepository studentRepository) {
+    public static Integer generateRandomStudents(Integer rowsToCreate, StudentRepository studentRepository) {
         Integer savedStudents = 0;
         Faker faker = new Faker();
         for (int i = 1; i <= 20; i++) {
@@ -28,5 +28,12 @@ public class ApplicationHelper {
             }
         }
         return savedStudents;
+    }
+
+    public static void retrieveStudentsSorted(StudentRepository studentRepository) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "firstName")
+                .and(Sort.by("age").descending());
+        studentRepository.findAll(sort)
+                .forEach(student -> System.out.println(student.getFirstName() + " " + student.getAge()));
     }
 }
