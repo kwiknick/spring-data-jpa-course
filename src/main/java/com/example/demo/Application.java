@@ -18,19 +18,7 @@ public class Application {
     @Bean
     CommandLineRunner commandLineRunner(StudentRepository studentRepository) {
         return args -> {
-            ApplicationHelper.generateRandomStudents(20, studentRepository);
-            ApplicationHelper.retrieveStudentsSorted(studentRepository);
 
-            PageRequest pageRequest = PageRequest.of(0, 5, Sort.by("firstName").ascending());
-            Page<StudentEntity> page = studentRepository.findAll(pageRequest);
-            System.out.println(page);
-
-            for (int i = pageRequest.getPageNumber() + 1; i < page.getTotalPages(); i++) {
-                pageRequest = PageRequest.of(i, pageRequest.getPageSize(), pageRequest.getSort());
-                page = studentRepository.findAll(pageRequest);
-                System.out.println(page);
-                Thread.sleep(2000);
-            }
         };
     }
 }
