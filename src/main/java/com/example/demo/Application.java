@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,9 +17,22 @@ public class Application {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(StudentRepository studentRepository) {
+    CommandLineRunner commandLineRunner(StudentRepository studentRepository,
+                                        StudentIdCardRepository studentIdCardRepository) {
         return args -> {
+            Faker faker = new Faker();
+            String firstName = faker.name().firstName();
+            String lastName = faker.name().lastName();
+            String email = String.format("%s.%s@willard.io", firstName, lastName);
+            StudentEntity student = new StudentEntity(
+                    firstName,
+                    lastName,
+                    email,
+                    faker.number().numberBetween(17, 55));
 
+            StudentIdCardEntity studentIdCard = new StudentIdCardEntity("123456789", student);
+
+            studentIdCardRepository.save(studentIdCard);
         };
     }
 }

@@ -66,4 +66,9 @@ public class StudentIdCardEntity {
     public StudentIdCardEntity(String cardNumber) {
         this.cardNumber = cardNumber;
     }
+
+    public StudentIdCardEntity(String cardNumber, StudentEntity student) {
+        this.cardNumber = cardNumber;
+        this.student = student;
+    }
 }
